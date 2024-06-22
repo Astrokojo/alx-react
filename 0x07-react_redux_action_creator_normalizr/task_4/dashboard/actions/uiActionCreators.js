@@ -1,4 +1,3 @@
-// task_4/dashboard/src/actions/uiActionCreators.js
 import { LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER } from './uiActionTypes';
 
 export const login = (email, password) => ({
