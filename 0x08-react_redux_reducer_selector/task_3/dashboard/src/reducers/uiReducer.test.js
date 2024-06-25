@@ -1,23 +1,23 @@
+import { toJS } from 'immutable';
 import uiReducer, { initialState } from './uiReducer';
-import { DISPLAY_NOTIFICATION_DRAWER } from "../../actions/uiActionTypes";
+import { DISPLAY_NOTIFICATION_DRAWER } from '../actions/uiActionTypes';
 
-describe('uiReducer', () => {
-    it('should return the initial state when no action is passed', () => {
+describe('reducer', function () {
+    it('initial state', function () {
         const state = uiReducer(undefined, {});
-        expect(state).toEqual(initialState);
+        expect(state.toJS()).toEqual(initialState);
     });
 
-    it('should handle DISPLAY_NOTIFICATION_DRAWER', () => {
+    it('SELECT_COURSE', function () {
+        const state = uiReducer(undefined, { type: 'SELECT_COURSE' });
+        expect(state.toJS()).toEqual(initialState);
+    });
+
+    it('DISPLAY_NOTIFICATION_DRAWER', function () {
         const state = uiReducer(undefined, { type: DISPLAY_NOTIFICATION_DRAWER });
-        expect(state).toEqual({
-            ...initialState, isNotificationDrawerVisible: true
-        });
-
-        // Convert newState to JS object for comparison
-        expect(newState.toJS()).toEqual({
+        expect(state.toJS()).toEqual({
+            ...initialState,
             isNotificationDrawerVisible: true,
-            isUserLoggedIn: false,
-            user: {},
         });
     });
-})
+});

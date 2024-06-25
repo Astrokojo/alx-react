@@ -1,5 +1,5 @@
 import courseReducer from "./courseReducer"
-import { FETCH_COURSE_SUCCESS, SELECT_COURSE, UNSELECT_COURSE } from "../../actions/courseActionTypes"
+import { FETCH_COURSE_SUCCESS, SELECT_COURSE, UNSELECT_COURSE } from "../actions/courseActionTypes"
 
 describe(courseReducer, () => {
     it('should return the initial state i.e an empty array', () => {
