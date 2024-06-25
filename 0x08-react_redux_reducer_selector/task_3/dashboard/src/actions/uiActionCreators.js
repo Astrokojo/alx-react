@@ -1,43 +1,26 @@
-const fetch = require('node-fetch');
-import { LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER, LOGIN_SUCCESS, LOGIN_FAILURE } from './uiActionTypes';
+import { LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER } from './uiActionTypes';
+import { useDispath } from 'react-redux';
 
 export const login = (email, password) => ({
-    type: LOGIN,
-    user: { email, password }
+  type: LOGIN,
+  payload: { user: { email, password } },
 });
 
 export const logout = () => ({
-    type: LOGOUT
+  type: LOGOUT,
 });
 
 export const displayNotificationDrawer = () => ({
-    type: DISPLAY_NOTIFICATION_DRAWER
+  type: DISPLAY_NOTIFICATION_DRAWER,
 });
 
 export const hideNotificationDrawer = () => ({
-    type: HIDE_NOTIFICATION_DRAWER
+  type: HIDE_NOTIFICATION_DRAWER,
 });
 
-export const loginSuccess = () => ({
-    type: LOGIN_SUCCESS
+export const bindUIActionCreators = (dispatch) => ({
+  boundLogin: (email, password) => dispatch(login(email, password)),
+  boundLogout: () => dispatch(logout()),
+  boundDisplayNotificationDrawer: () => dispatch(displayNotificationDrawer()),
+  boundHideNotificationDrawer: () => dispatch(hideNotificationDrawer())
 });
-
-export const loginFailure = () => ({
-    type: LOGIN_FAILURE
-});
-
-export const loginRequest = (email, password) => {
-    return async (dispatch) => {
-        dispatch(login(email, password));
-        try {
-            const response = await fetch('/login-success.json');
-            if (!response.ok) {
-                throw new Error('Login request failed');
-            }
-            dispatch(loginSuccess());
-        } catch (error) {
-            console.error('Login request failed:', error);
-            dispatch(loginFailure());
-        }
-    };
-};
