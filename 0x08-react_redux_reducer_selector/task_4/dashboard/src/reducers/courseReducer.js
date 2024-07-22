@@ -4,40 +4,37 @@ import {
     UNSELECT_COURSE,
 } from '../actions/courseActionTypes';
 
-const courseReducer = (state = [], action) => {
+import coursesNormalizer from '../schema/courses';
+
+const initialState = Map({
+    courses: Map(),
+    notifications: Map(),
+});
+
+const courseReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_COURSE_SUCCESS:
-            return action.data.map((course) => {
-                return {
-                    ...course,
-                    isSelected: false,
-                };
-            });
+            const normalizedCourses = coursesNormalizer(action.data);
+            return state.mergeIn(['courses'], normalizedCourses);
 
         case SELECT_COURSE:
-            return state.map((course, index) => {
-                const current = {
-                    ...course,
-                };
-                if (course.id == action.index) current.isSelected = true;
-
-                return current;
-            });
+            return state.updateIn(['courses', action.index], course =>
+                course.set('isSelected', true)
+            );
 
         case UNSELECT_COURSE:
-            return state.map((course) => {
-                const current = {
-                    ...course,
-                };
-                if (course.id == action.index) current.isSelected = false;
+            return state.updateIn(['courses', action.index], course =>
+                course.set('isSelected', false)
+            );
 
-                return current;
-            });
+        case MARK_NOTIFICATION_READ:
+            return state.updateIn(['notifications', action.notificationId], notification =>
+                notification.set('isRead', true)
+            );
 
         default:
-            break;
+            return state;
     }
-    return state;
 };
 
 export default courseReducer;

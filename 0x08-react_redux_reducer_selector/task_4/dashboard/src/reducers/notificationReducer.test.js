@@ -1,4 +1,5 @@
 import notificationReducer from './notificationReducer';
+import { Map, List} from 'immutable';
 import {
   FETCH_NOTIFICATIONS_SUCCESS,
   MARK_AS_READ,
